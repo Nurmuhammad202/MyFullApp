@@ -1,3 +1,3 @@
 package com.example.mhtestapp.domain.models
 
-data class UserName(var name: String)
+data class UserName(var firstName: String)
