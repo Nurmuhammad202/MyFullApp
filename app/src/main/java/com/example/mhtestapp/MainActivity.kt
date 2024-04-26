@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.example.mhtestapp.data.storage.SharedPrefUserStorage
 import com.example.mhtestapp.data.userRepository.UserRepositoryImpl
 import com.example.mhtestapp.databinding.ActivityMainBinding
 import com.example.mhtestapp.domain.models.SaveUserNameParam
@@ -12,7 +13,8 @@ import com.example.mhtestapp.domain.useCase.SaveUserNameUseCase
 
 class MainActivity : AppCompatActivity() {
 
-    private val repository by lazy { UserRepositoryImpl(context = applicationContext) }
+    private val userStorage by lazy { SharedPrefUserStorage(context = applicationContext) }
+    private val repository by lazy { UserRepositoryImpl(userStorage = userStorage) }
 
     private val getUserNameUseCase by lazy { GetUserNameUseCase(repository = repository) }
     private val saveUserNameUseCase by lazy { SaveUserNameUseCase(repository = repository) }
