@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.example.data.storage.SharedPrefUserStorage
 import com.example.data.userRepository.UserRepositoryImpl
 import com.example.mhtestapp.databinding.ActivityMainBinding
@@ -28,10 +29,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater);
         setContentView(binding?.root)
 
-        saveUserNameUseCase.execute(param = SaveUserNameParam(firstName = "Android!!"))
+        binding?.btnSave?.setOnClickListener {
+            val name = binding?.editTxtName?.text.toString()
 
-        val userName = getUserNameUseCase.execute()
-        Log.e(TAG, "onCreate: userName: ${userName.firstName}")
+            saveUserNameUseCase.execute(param = SaveUserNameParam(firstName = name))
+        }
 
+        binding?.btnGet?.setOnClickListener {
+            val userName = getUserNameUseCase.execute()
+
+            binding?.txtName?.text = userName.firstName
+        }
     }
 }
